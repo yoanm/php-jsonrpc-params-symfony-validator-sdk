@@ -1,6 +1,7 @@
 <?php
 namespace Yoanm\JsonRpcParamsSymfonyValidator\Infra;
 
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Yoanm\JsonRpcParamsSymfonyValidator\Domain\Model\MethodWithValidatedParams;
 use Yoanm\JsonRpcServer\Domain\Event\Action\ValidateParamsEvent;
@@ -31,6 +32,7 @@ class JsonRpcParamsValidator
             return;
         }
         foreach ($this->validator->validate($event->getParamList(), $method->getParamsConstraint()) as $violation) {
+            /** @var ConstraintViolationInterface $violation */
             $event->addViolation([
                 'path' => $violation->getPropertyPath(),
                 'message' => $violation->getMessage(),
