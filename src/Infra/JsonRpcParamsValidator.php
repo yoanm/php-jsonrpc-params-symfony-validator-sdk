@@ -2,7 +2,7 @@
 namespace Yoanm\JsonRpcParamsSymfonyValidator\Infra;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Yoanm\JsonRpcParamsSymfonyValidator\Model\MethodWithValidatedParams;
+use Yoanm\JsonRpcParamsSymfonyValidator\Domain\Model\MethodWithValidatedParams;
 use Yoanm\JsonRpcServer\Domain\Event\Action\ValidateParamsEvent;
 
 /**
