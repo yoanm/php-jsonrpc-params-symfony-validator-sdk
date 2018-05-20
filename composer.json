@@ -43,6 +43,7 @@
         "symfony/http-kernel": "^3.4",
         "symfony/routing": "^3.4",
         "yoanm/php-unit-extended": "~1.0",
-        "yoanm/jsonrpc-server-doc-sdk": "dev-release/3.0.0"
-    }
+        "yoanm/jsonrpc-server-doc-sdk": "dev-release/1.0.0"
+    },
+    "minimum-stability": "dev"
 }
