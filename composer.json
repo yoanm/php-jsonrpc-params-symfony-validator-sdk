@@ -1,7 +1,7 @@
 {
     "name": "yoanm/jsonrpc-params-symfony-validator-sdk",
-    "description": "Symfony Server SDK to convert an HTTP json-rpc request into HTTP json-rpc response",
-    "license": "GPL-3.0-only",
+    "description": "Simple JSON-RPC params validator that use Symfony validator component",
+    "license": "MIT",
     "type": "library",
     "support": {
         "issues": "https://github.com/yoanm/php-jsonrpc-params-symfony-validator-sdk/issues"
@@ -25,8 +25,8 @@
         }
     },
     "require": {
-        "php": ">5.5",
-        "yoanm/jsonrpc-server-sdk": "~2.0",
+        "php": ">=7.0",
+        "yoanm/jsonrpc-server-sdk": "dev-release/3.0.0",
         "symfony/validator": "^3.0 || ^4.0"
     },
     "suggest": {
@@ -43,6 +43,7 @@
         "symfony/http-kernel": "^3.4",
         "symfony/routing": "^3.4",
         "yoanm/php-unit-extended": "~1.0",
-        "yoanm/jsonrpc-server-doc-sdk": "dev-master"
-    }
+        "yoanm/jsonrpc-server-doc-sdk": "dev-release/1.0.0"
+    },
+    "minimum-stability": "dev"
 }
