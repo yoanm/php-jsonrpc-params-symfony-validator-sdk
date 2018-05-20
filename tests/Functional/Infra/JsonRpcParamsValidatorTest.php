@@ -32,7 +32,7 @@ class JsonRpcParamsValidatorTest extends TestCase
         );
     }
 
-    public function testShouldDoNothingIfMethodDoNotImplementSpecificInterface()
+    public function testShouldDoNothingIfMethodDoesNotImplementSpecificInterface()
     {
         $paramList = ['paramList'];
         /** @var JsonRpcMethodInterface|ObjectProphecy $method */

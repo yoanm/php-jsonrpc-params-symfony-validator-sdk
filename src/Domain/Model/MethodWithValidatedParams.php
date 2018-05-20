@@ -9,9 +9,7 @@ use Symfony\Component\Validator\Constraint;
 interface MethodWithValidatedParams
 {
     /**
-     * Fields existence and type
-     *
      * @return Constraint Usually a Collection constraint
      */
-    public function getParamsConstraint();
+    public function getParamsConstraint() : Constraint;
 }
