@@ -27,17 +27,17 @@
          forceCoversAnnotation="true"
 
          bootstrap="vendor/autoload.php"
->
+        >
     <listeners>
         <listener class="Yoanm\PhpUnitExtended\Listener\YoanmTestsStrategyListener"/>
     </listeners>
 
     <testsuites>
         <testsuite name="functional">
-            <directory>tests/Functional</directory>
+            <directory>tests/Functional/*</directory>
         </testsuite>
         <testsuite name="technical">
-            <directory>tests/Technical</directory>
+            <directory>tests/Technical/*</directory>
         </testsuite>
     </testsuites>
 
