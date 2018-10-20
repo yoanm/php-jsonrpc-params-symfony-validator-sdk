@@ -21,11 +21,12 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests",
-            "Tests\\Functional\\BehatContext\\": "features/bootstrap"
+            "Tests\\Functional\\BehatContext\\": "features/bootstrap",
+            "DemoApp\\": "features/demo_app/src"
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "yoanm/jsonrpc-server-sdk": "dev-release/3.0.0",
         "symfony/validator": "^3.0 || ^4.0"
     },

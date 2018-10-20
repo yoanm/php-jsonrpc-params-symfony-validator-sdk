@@ -3,13 +3,15 @@ namespace Yoanm\JsonRpcParamsSymfonyValidator\Infra;
 
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Yoanm\JsonRpcParamsSymfonyValidator\Domain\Model\MethodWithValidatedParams;
-use Yoanm\JsonRpcServer\Domain\Event\Action\ValidateParamsEvent;
+use Yoanm\JsonRpcParamsSymfonyValidator\Domain\MethodWithValidatedParamsInterface;
+use Yoanm\JsonRpcServer\Domain\JsonRpcMethodInterface;
+use Yoanm\JsonRpcServer\Domain\JsonRpcMethodParamsValidatorInterface;
+use Yoanm\JsonRpcServer\Domain\Model\JsonRpcRequest;
 
 /**
  * Class JsonRpcParamsValidator
  */
-class JsonRpcParamsValidator
+class JsonRpcParamsValidator implements JsonRpcMethodParamsValidatorInterface
 {
     /** @var ValidatorInterface */
     private $validator;
@@ -22,22 +24,26 @@ class JsonRpcParamsValidator
         $this->validator = $validator;
     }
 
-    /**
-     * @param ValidateParamsEvent $event
-     */
-    public function validate(ValidateParamsEvent $event)
+    public function validate(JsonRpcRequest $jsonRpcRequest, JsonRpcMethodInterface $method) : array
     {
-        $method = $event->getMethod();
-        if (!$method instanceof MethodWithValidatedParams) {
-            return;
+        $violationList = [];
+        if (!$method instanceof MethodWithValidatedParamsInterface) {
+            return $violationList;
         }
-        foreach ($this->validator->validate($event->getParamList(), $method->getParamsConstraint()) as $violation) {
+        $sfViolationList = $this->validator->validate(
+            $jsonRpcRequest->getParamList(),
+            $method->getParamsConstraint()
+        );
+
+        foreach ($sfViolationList as $violation) {
             /** @var ConstraintViolationInterface $violation */
-            $event->addViolation([
+            $violationList[] = [
                 'path' => $violation->getPropertyPath(),
                 'message' => $violation->getMessage(),
                 'code' => $violation->getCode(),
-            ]);
+            ];
         }
+
+        return $violationList;
     }
 }

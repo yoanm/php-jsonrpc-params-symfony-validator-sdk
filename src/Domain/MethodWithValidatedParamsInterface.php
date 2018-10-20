@@ -1,12 +1,12 @@
 <?php
-namespace Yoanm\JsonRpcParamsSymfonyValidator\Domain\Model;
+namespace Yoanm\JsonRpcParamsSymfonyValidator\Domain;
 
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Interface MethodWithValidatedParams
+ * Interface MethodWithValidatedParamsInterface
  */
-interface MethodWithValidatedParams
+interface MethodWithValidatedParamsInterface
 {
     /**
      * @return Constraint Usually a Collection constraint
