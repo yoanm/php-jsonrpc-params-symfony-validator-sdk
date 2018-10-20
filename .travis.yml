@@ -1,9 +1,9 @@
 language: php
 
 php:
-  - '7.0'
   - '7.1'
   - '7.2'
+  - '7.3'
 
 env:
   global:
@@ -11,6 +11,9 @@ env:
     TEST_OUTPUT_STYLE: 'pretty'
     PHPCS_REPORT_STYLE: 'full'
     COMPOSER_OPTIONS: '--optimize-autoloader'
+  matrix:
+  - SYMFONY_VERSION: '~3.0'
+  - SYMFONY_VERSION: '~4.0'
 
 sudo: false
 
@@ -19,9 +22,10 @@ matrix:
 
 before_install:
   # remove xdebug to speed up build
-  - phpenv config-rm xdebug.ini
+  - phpenv config-rm xdebug.ini || true
 
 install:
+  - composer require symfony/validator:$SYMFONY_VERSION
   - make build
 script:
   - make test-technical

@@ -2,14 +2,16 @@
 namespace Tests\Functional\Infra;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Yoanm\JsonRpcParamsSymfonyValidator\Domain\Model\MethodWithValidatedParams;
+use Yoanm\JsonRpcParamsSymfonyValidator\Domain\MethodWithValidatedParamsInterface;
 use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
 use Yoanm\JsonRpcServer\Domain\Event\Action\ValidateParamsEvent;
 use Yoanm\JsonRpcServer\Domain\JsonRpcMethodInterface;
+use Yoanm\JsonRpcServer\Domain\Model\JsonRpcRequest;
 
 /**
  * @covers \Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator
@@ -37,24 +39,35 @@ class JsonRpcParamsValidatorTest extends TestCase
         $paramList = ['paramList'];
         /** @var JsonRpcMethodInterface|ObjectProphecy $method */
         $method = $this->prophesize(JsonRpcMethodInterface::class);
-        $event = new ValidateParamsEvent($method->reveal(), $paramList);
+        /** @var JsonRpcRequest $jsonRpcRequest */
+        $jsonRpcRequest = $this->prophesize(JsonRpcRequest::class);
 
-        $this->validator->validate($event);
-        $this->assertCount(0, $event->getViolationList());
+        $this->sfValidator->validate(Argument::cetera())
+            ->shouldNotBeCalled()
+        ;
+
+        $violationList = $this->validator->validate($jsonRpcRequest->reveal(), $method->reveal());
+
+        $this->assertCount(0, $violationList);
     }
 
-    public function testSshouldCallSfValidator()
+    public function testShouldCallSfValidator()
     {
         $paramList = ['paramList'];
-        /** @var MethodWithValidatedParams|JsonRpcMethodInterface|ObjectProphecy $method */
-        $method = $this->prophesize(MethodWithValidatedParams::class);
+        /** @var MethodWithValidatedParamsInterface|JsonRpcMethodInterface|ObjectProphecy $method */
+        $method = $this->prophesize(MethodWithValidatedParamsInterface::class);
         $method->willImplement(JsonRpcMethodInterface::class);
+        /** @var JsonRpcRequest $jsonRpcRequest */
+        $jsonRpcRequest = $this->prophesize(JsonRpcRequest::class);
         /** @var Collection|ObjectProphecy $paramConstraint */
         $paramConstraint = $this->prophesize(Collection::class);
-        $event = new ValidateParamsEvent($method->reveal(), $paramList);
 
         $method->getParamsConstraint()
             ->willReturn($paramConstraint->reveal())
+            ->shouldBeCalled()
+        ;
+        $jsonRpcRequest->getParamList()
+            ->willReturn($paramList)
             ->shouldBeCalled()
         ;
 
@@ -63,16 +76,19 @@ class JsonRpcParamsValidatorTest extends TestCase
             ->shouldBeCalled()
         ;
 
-        $this->validator->validate($event);
-        $this->assertCount(0, $event->getViolationList());
+        $violationList = $this->validator->validate($jsonRpcRequest->reveal(), $method->reveal());
+
+        $this->assertCount(0, $violationList);
     }
 
     public function testShouldNormalizeViolations()
     {
         $paramList = ['paramList'];
-        /** @var MethodWithValidatedParams|JsonRpcMethodInterface|ObjectProphecy $method */
-        $method = $this->prophesize(MethodWithValidatedParams::class);
+        /** @var MethodWithValidatedParamsInterface|JsonRpcMethodInterface|ObjectProphecy $method */
+        $method = $this->prophesize(MethodWithValidatedParamsInterface::class);
         $method->willImplement(JsonRpcMethodInterface::class);
+        /** @var JsonRpcRequest $jsonRpcRequest */
+        $jsonRpcRequest = $this->prophesize(JsonRpcRequest::class);
         /** @var Collection|ObjectProphecy $paramConstraint */
         $paramConstraint = $this->prophesize(Collection::class);
         /** @var ConstraintViolationInterface|ObjectProphecy $violation1 */
@@ -81,7 +97,7 @@ class JsonRpcParamsValidatorTest extends TestCase
         $violation2 = $this->prophesize(ConstraintViolationInterface::class);
         /** @var ConstraintViolationInterface|ObjectProphecy $violation3 */
         $violation3 = $this->prophesize(ConstraintViolationInterface::class);
-        $violationList = [$violation1->reveal(), $violation2->reveal(), $violation3->reveal()];
+        $sfViolationList = [$violation1->reveal(), $violation2->reveal(), $violation3->reveal()];
         $expectedNormalizedErrorList = [
             [
                 'path' => 'path1',
@@ -109,20 +125,22 @@ class JsonRpcParamsValidatorTest extends TestCase
         $violation3->getMessage()->willReturn($expectedNormalizedErrorList[2]['message'])->shouldBeCalled();
         $violation3->getCode()->willReturn($expectedNormalizedErrorList[2]['code'])->shouldBeCalled();
 
-        $event = new ValidateParamsEvent($method->reveal(), $paramList);
-
         $method->getParamsConstraint()
             ->willReturn($paramConstraint->reveal())
             ->shouldBeCalled()
         ;
-
-        $this->sfValidator->validate($paramList, $paramConstraint->reveal())
-            ->willReturn($violationList)
+        $jsonRpcRequest->getParamList()
+            ->willReturn($paramList)
             ->shouldBeCalled()
         ;
 
-        $this->validator->validate($event);
+        $this->sfValidator->validate($paramList, $paramConstraint->reveal())
+            ->willReturn($sfViolationList)
+            ->shouldBeCalled()
+        ;
 
-        $this->assertSame($expectedNormalizedErrorList, $event->getViolationList());
+        $violationList = $this->validator->validate($jsonRpcRequest->reveal(), $method->reveal());
+
+        $this->assertSame($expectedNormalizedErrorList, $violationList);
     }
 }
