@@ -2,14 +2,10 @@
 namespace Tests\Functional\BehatContext;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\Environment\InitializedContextEnvironment;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsIdentical;
-use Prophecy\Argument;
 use Symfony\Component\Validator\ValidatorBuilder;
-use Tests\Functional\BehatContext\App\FakeEndpointCreator;
 use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
 use Yoanm\JsonRpcServer\Domain\Model\JsonRpcRequest;
 
@@ -51,7 +47,6 @@ class FeatureContext implements Context
 
     /**
      * @Then I should have the following validation error:
-     * @param PyStringNode $node
      */
     public function thenIShouldHaveTheFollowingViolation(PyStringNode $node)
     {

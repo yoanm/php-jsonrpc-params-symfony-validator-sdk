@@ -6,6 +6,7 @@ COVERAGE_OUTPUT_STYLE ?= html
 BUILD_DIRECTORY ?= build
 REPORTS_DIRECTORY ?= ${BUILD_DIRECTORY}/reports
 COVERAGE_DIRECTORY ?= ${BUILD_DIRECTORY}/coverage
+BEHAT_COVERAGE_DIRECTORY ?= ${BUILD_DIRECTORY}/behat-coverage
 COVERAGE_CLOVER_FILE_PATH ?= ${COVERAGE_DIRECTORY}/clover.xml
 
 ## Commands options
@@ -88,15 +89,21 @@ codestyle: create-reports-directory
 coverage: create-coverage-directory
 	./vendor/bin/phpunit ${PHPUNIT_COLOR_OPTION} ${PHPUNIT_OUTPUT_STYLE_OPTION} ${PHPUNIT_COVERAGE_OPTION}
 
+behat-coverage: create-behat-coverage-directory
+	composer required leanphp/behat-code-coverage
+	./vendor/bin/behat ${BEHAT_COLOR_OPTION} ${BEHAT_OUTPUT_STYLE_OPTION} --no-snippets --profile coverage
 
 
 # Internal commands
 create-coverage-directory:
 	mkdir -p ${COVERAGE_DIRECTORY}
 
+create-behat-coverage-directory:
+	mkdir -p ${BEHAT_COVERAGE_DIRECTORY}
+
 create-reports-directory:
 	mkdir -p ${REPORTS_DIRECTORY}
 
 
-.PHONY: build install configure test test-technical test-functional codestyle coverage create-coverage-directory create-reports-directory
+.PHONY: build install configure test test-technical test-functional codestyle coverage behat-coverage create-coverage-directory create-behat-coverage-directory create-reports-directory
 .DEFAULT: build
