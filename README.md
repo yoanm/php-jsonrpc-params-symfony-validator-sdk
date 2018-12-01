@@ -11,6 +11,32 @@ Simple JSON-RPC params validator that use Symfony validator component
 
 ## How to use
 
+In order to be validated, a JSON-RPC method must : 
+ - Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
+ - Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
+ 
+Then use it as following : 
+```php
+use Symfony\Component\Validator\ValidatorBuilder;
+use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
+
+// Create the validator
+$paramsValidator = new JsonRpcParamsValidator(
+  (new ValidatorBuilder())->getValidator()
+);
+
+// Validate a given JSON-RPC method instance against a JSON-RPC request
+$violationList = $paramsValidator->validate($jsonRpcRequest, $jsonRpcMethod);
+```
+
+Each violations will have the following format :
+```php
+[
+  'path' => 'property_path',
+  'message' => 'violation message',
+  'code' => 'violation_code'
+]
+```
 
 ## Contributing
 See [contributing note](./CONTRIBUTING.md)
