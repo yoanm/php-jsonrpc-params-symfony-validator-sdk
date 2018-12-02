@@ -14,8 +14,20 @@ Simple JSON-RPC params validator that use Symfony validator component
 In order to be validated, a JSON-RPC method must : 
  - Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
  - Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
- 
-Then use it as following : 
+
+### With [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
+Create the validator and inject it into request handler : 
+```php
+$requestHandler->setMethodParamsValidator(
+  new JsonRpcParamsValidator(
+    (new ValidatorBuilder())->getValidator()
+  )
+);
+```
+
+Then you can send JSON-RPC request string to the server and any method wich implements `MethodWithValidatedParamsInterface` will be validated.
+
+### Standalone 
 ```php
 use Symfony\Component\Validator\ValidatorBuilder;
 use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
@@ -29,6 +41,40 @@ $paramsValidator = new JsonRpcParamsValidator(
 $violationList = $paramsValidator->validate($jsonRpcRequest, $jsonRpcMethod);
 ```
 
+### Params validation example
+```php
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Yoanm\JsonRpcParamsSymfonyValidator\Domain\MethodWithValidatedParamsInterface;
+use Yoanm\JsonRpcServer\Domain\JsonRpcMethodInterface;
+
+class MethodExample implements JsonRpcMethodInterface, MethodWithValidatedParamsInterface
+{
+  /**
+   * {@inheritdoc}
+   */
+  public function apply(array $paramList = null)
+  {
+    return 'result';
+  }
+
+  public function getParamsConstraint(): Constraint
+  {
+    return new Collection(
+      [
+        'fields' => [
+          'fieldA' => new NotNull(),
+          'fieldB' => new NotBlank(),
+        ],
+      ]
+    );
+  }
+}
+```
+
+### Violations format
 Each violations will have the following format :
 ```php
 [
