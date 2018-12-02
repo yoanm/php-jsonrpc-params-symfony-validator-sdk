@@ -1,82 +1,58 @@
 <?php
 namespace Tests\Functional\BehatContext;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\Constraint\IsIdentical;
-use Symfony\Component\Validator\ValidatorBuilder;
-use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
-use Yoanm\JsonRpcServer\Domain\Model\JsonRpcRequest;
+use Tests\Functional\BehatContext\Helper\FakeEndpointCreator;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements Context
+class FeatureContext extends AbstractContext
 {
-    /** @var array */
-    private $lastViolationList = [];
+    const KEY_JSON_RPC = 'jsonrpc';
+    const KEY_ID = 'id';
+    const KEY_ERROR = 'error';
+
+    const SUB_KEY_ERROR_CODE = 'code';
+    const SUB_KEY_ERROR_MESSAGE = 'message';
+
+    /** @var string|null */
+    private $lastResponse = null;
 
     /**
-     * @When I validate method :methodClass with:
+     * @When I send following payload:
      */
-    public function whenIValidateMethodWith($methodClass, PyStringNode $payload)
+    public function whenISendTheFollowingPayload(PyStringNode $payload)
     {
-        $jsonRpcRequest = new JsonRpcRequest('2.0', $methodClass);
-        $jsonRpcRequest->setParamList(json_decode($payload->getRaw(), true));
+        $endpoint = (new FakeEndpointCreator())->create();
 
-        $this->lastViolationList = $this->getValidator()->validate($jsonRpcRequest, new $methodClass);
+        $this->lastResponse = $endpoint->index($payload->getRaw());
     }
 
     /**
-     * @Then I should have no violation
+     * @Then I should have the following response:
      */
-    public function thenIShouldHaveNoViolation()
+    public function thenIShouldHaveTheFollowingResponse(PyStringNode $expectedResult)
     {
-        Assert::assertEmpty($this->lastViolationList);
-    }
-
-    /**
-     * @Then I should have 1 violation
-     * @Then I should have :count violations
-     */
-    public function thenIShouldHaveXViolation($count = 1)
-    {
-        Assert::assertCount((int) $count, $this->lastViolationList);
-    }
-
-    /**
-     * @Then I should have the following validation error:
-     */
-    public function thenIShouldHaveTheFollowingViolation(PyStringNode $node)
-    {
-        $found = false;
-        $decoded = json_decode($node->getRaw(), true);
-        $constraint = new IsIdentical($decoded);
-        foreach ($this->lastViolationList as $violation) {
-            if (true === $constraint->evaluate($violation, '', true)) {
-                $found = true;
-                break;
-            }
-        }
-
-        if (true !== $found) {
-            throw new \Exception(
-                sprintf(
-                    'Violation "%s" not found in violation list : %s',
-                    json_encode($decoded),
-                    json_encode($this->lastViolationList)
-                )
-            );
-        }
-    }
-    /**
-     * @return JsonRpcParamsValidator
-     */
-    private function getValidator() : JsonRpcParamsValidator
-    {
-        return new JsonRpcParamsValidator(
-            (new ValidatorBuilder())->getValidator()
+        // Decode content to get rid of any indentation/spacing/... issues
+        Assert::assertEquals(
+            $this->jsonDecode($expectedResult->getRaw()),
+            $this->getLastResponseDecoded()
         );
+    }
+
+    /**
+     * @Then I should have an empty response
+     */
+    public function thenIShouldHaveAnEmptyResponse()
+    {
+        // Decode content to get rid of any indentation/spacing/... issues
+        Assert::assertEmpty($this->getLastResponseDecoded());
+    }
+
+    private function getLastResponseDecoded()
+    {
+        return $this->jsonDecode($this->lastResponse);
     }
 }
