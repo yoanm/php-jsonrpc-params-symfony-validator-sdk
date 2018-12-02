@@ -11,7 +11,7 @@ Simple JSON-RPC params validator that use Symfony validator component
 
 See [yoanm/symfony-jsonrpc-params-validator](https://github.com/yoanm/symfony-jsonrpc-params-validator) for automatic dependency injection.
 
-See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/jsonrpc-params-symfony-constraint-doc-sdk) for documentation generation.
+See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/php-jsonrpc-params-symfony-constraint-doc-sdk) for documentation generation.
 
 ## How to use
 
