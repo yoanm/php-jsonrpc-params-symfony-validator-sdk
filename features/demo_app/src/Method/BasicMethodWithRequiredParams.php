@@ -26,8 +26,6 @@ class BasicMethodWithRequiredParams implements JsonRpcMethodInterface, MethodWit
                     'fieldA' => new NotNull(),
                     'fieldB' => new NotBlank(),
                 ],
-                'allowExtraFields' => false,
-                'allowMissingFields' => false,
             ]
         );
     }
