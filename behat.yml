@@ -2,4 +2,19 @@ default:
   suites:
     default:
       contexts:
+        - Tests\Functional\BehatContext\StandaloneContext: ~
         - Tests\Functional\BehatContext\FeatureContext: ~
+coverage:
+  extensions:
+    LeanPHP\Behat\CodeCoverage\Extension:
+      drivers:
+      - local
+      filter:
+        whitelist:
+          include:
+            directories:
+              'src': ~
+      report:
+        format:   html
+        options:
+          target: build/behat-coverage
