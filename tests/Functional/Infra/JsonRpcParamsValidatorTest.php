@@ -25,7 +25,7 @@ class JsonRpcParamsValidatorTest extends TestCase
     /** @var ValidatorInterface|ObjectProphecy */
     private $sfValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sfValidator = $this->prophesize(ValidatorInterface::class);
 
