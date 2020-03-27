@@ -14,6 +14,15 @@ See [yoanm/symfony-jsonrpc-params-validator](https://github.com/yoanm/symfony-js
 
 See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/php-jsonrpc-params-symfony-constraint-doc-sdk) for documentation generation.
 
+## Versions
+
+- Symfony v3/4 - PHP >=7.0 : `^v1.0` 
+- Symfony v4/5 - PHP >=7.1 : `^v2.0`
+
+⚠️⚠️ `v0.2.0` is replaced by `v1.0.0` ! ⚠️⚠️
+
+⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
+
 ## How to use
 
 In order to be validated, a JSON-RPC method must : 
