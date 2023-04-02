@@ -31,14 +31,23 @@
     "yoanm/jsonrpc-params-symfony-constraint-doc-sdk": "To generate payload documentation from validation constraints"
   },
   "require": {
-    "php": ">=7.2",
-    "yoanm/jsonrpc-server-sdk": "^3.0",
-    "symfony/validator": "^4.0 || ^5.0"
+    "php": "^8.0",
+    "symfony/validator": "^4.4 || ^5.4 || ^6.0",
+    "yoanm/jsonrpc-server-sdk": "^3.0"
   },
   "require-dev": {
-    "behat/behat": "~3.0",
-    "squizlabs/php_codesniffer": "3.*",
-    "phpunit/phpunit": "^7.0 || ^8.0",
-    "yoanm/php-unit-extended": "^1.0"
+    "behat/behat": "^3.9.0",
+    "dvdoug/behat-code-coverage": "^5.0",
+    "phpspec/prophecy": "^1.15",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "phpunit/phpunit": "^9.6",
+    "squizlabs/php_codesniffer": "^3.5",
+    "yoanm/php-unit-extended": "^2.0"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   }
 }
