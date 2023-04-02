@@ -30,7 +30,7 @@ See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/p
 
     ⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
 
-*   Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v3.0`
+*   Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v2.1`
 
 ## How to use
 
