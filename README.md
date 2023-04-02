@@ -23,20 +23,20 @@ See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/p
 
 ## Versions
 
-- Symfony v3/4 - PHP >=7.1 : `^v1.0` 
-- Symfony v4/5 - PHP >=7.2 : `^v2.0`
+*   Symfony v3/4 - PHP >=7.1 : `^v1.0` 
+*   Symfony v4/5 - PHP >=7.2 : `^v2.0`
 
-⚠️⚠️ `v0.2.0` is replaced by `v1.0.0` ! ⚠️⚠️
+    ⚠️⚠️ `v0.2.0` is replaced by `v1.0.0` ! ⚠️⚠️
 
-⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
+    ⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
 
-- Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v3.0`
+*   Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v3.0`
 
 ## How to use
 
 In order to be validated, a JSON-RPC method must : 
- - Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
- - Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
+*   Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
+*   Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
 
 ### With [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
 Create the validator and inject it into request handler : 
