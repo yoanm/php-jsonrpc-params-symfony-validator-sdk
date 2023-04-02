@@ -137,7 +137,6 @@ jobs:
   static-checks:
     name: Static checks
     runs-on: ubuntu-latest
-    needs: [ tests ]
     steps:
       - uses: actions/checkout@v3
 

@@ -3,6 +3,7 @@ namespace Tests\Functional\Infra;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -20,6 +21,8 @@ use Yoanm\JsonRpcServer\Domain\Model\JsonRpcRequest;
  */
 class JsonRpcParamsValidatorTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var JsonRpcParamsValidator */
     private $validator;
     /** @var ValidatorInterface|ObjectProphecy */
