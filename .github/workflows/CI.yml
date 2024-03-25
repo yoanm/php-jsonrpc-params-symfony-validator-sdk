@@ -126,7 +126,7 @@ jobs:
         if: ${{ env.COVERAGE_TYPE == 'xdebug' }}
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-groups-php${{ matrix.php-version }}
+          name: coverage-groups-php${{ matrix.php-version }}-sf${{ matrix.symfony-version }}
           path: build/coverage-groups
           if-no-files-found: error
 
