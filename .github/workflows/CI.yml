@@ -104,6 +104,7 @@ jobs:
           flags: |
             unit-tests
             php-${{ matrix.php-version }}
+            sf-${{ matrix.symfony-version }}
           path: build/coverage-groups
 
       - name: Create "functional tests" coverage group
@@ -119,6 +120,7 @@ jobs:
           flags: |
             functional-tests
             php-${{ matrix.php-version }}
+            sf-${{ matrix.symfony-version }}
           path: build/coverage-groups
 
       - name: Upload coverage reports
