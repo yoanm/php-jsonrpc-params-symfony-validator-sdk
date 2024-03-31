@@ -9,7 +9,7 @@ env:
 
 jobs:
   tests:
-    name: UTs & FTs - Symfony ${{ matrix.symfony-version }}
+    name: PHP ${{ matrix.php-version }} - Symfony ${{ matrix.symfony-version }}
     runs-on: ubuntu-latest
     env:
       COVERAGE_TYPE: none
@@ -121,7 +121,7 @@ jobs:
           if-no-files-found: error
 
   static-checks:
-    name: Static checks
+    name: Static analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
