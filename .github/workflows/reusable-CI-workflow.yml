@@ -66,8 +66,7 @@ jobs:
             php-version: '${{ needs.fetch-supported-versions.outputs.php-max }}'
             symfony-version: '6.4'
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            # Fix - symfony/yaml - Avoid issue with Sf YAML 6.4+ and Framework bundle
-            pkg-extra-constraints: behat/gherkin:~4.12.0 ${{ ( needs.fetch-supported-versions.outputs.symfony-max == '6.4' ) && 'symfony/yaml:~6.4.0' || '' }}
+            pkg-extra-constraints: behat/gherkin:~4.12.0
           - job-name: Bare minimum # => Lowest versions allowed by composer config
             php-version: '${{ needs.fetch-supported-versions.outputs.php-min }}'
             symfony-version: '${{ needs.fetch-supported-versions.outputs.symfony-min }}'
@@ -243,14 +242,14 @@ jobs:
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-next }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
             # Fix - symfony/framework-bundle - Framework bundle <7.0 require php 8.1 minimum !
-            pkg-extra-constraints: behat/gherkin:~4.12.0 ${{ ( needs.fetch-supported-versions.outputs.symfony-next == '7.0' && needs.fetch-supported-versions.outputs.php-max == '8.4' ) && 'symfony/framework-bundle:~7.0.0@dev' || '' }}
+            pkg-extra-constraints: behat/gherkin:~4.12.0
           - job-name: Symfony - With lowest supported PHP version
-            # Fix - Sf 7.0 require php 8.1 minimum, most of deps require 8.2 !
-            php-version: ${{ ( needs.fetch-supported-versions.outputs.symfony-next == '7.0' && needs.fetch-supported-versions.outputs.php-min == '8.0' ) && '8.2' || needs.fetch-supported-versions.outputs.php-min }}
+            # Fix - symfony/validator  7.1 require php 8.2 minimum !
+            php-version: ${{ ( needs.fetch-supported-versions.outputs.symfony-next == '7.1' && needs.fetch-supported-versions.outputs.php-min == '8.0' ) && '8.2' || needs.fetch-supported-versions.outputs.php-min }}
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-next }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
             # Fix - symfony/framework-bundle - Framework bundle <7.0 require php 8.1 minimum !
-            pkg-extra-constraints: behat/gherkin:~4.12.0 ${{ ( needs.fetch-supported-versions.outputs.symfony-next == '7.0' && needs.fetch-supported-versions.outputs.php-min == '8.0' ) && 'symfony/framework-bundle:~7.0.0@dev' || '' }}
+            pkg-extra-constraints: behat/gherkin:~4.12.0
 
     steps:
       - name: Check out code
