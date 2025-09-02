@@ -1,7 +1,9 @@
 # JSON-RPC params symfony validator
+
 [![License](https://img.shields.io/github/license/yoanm/php-jsonrpc-params-symfony-validator-sdk.svg)](https://github.com/yoanm/php-jsonrpc-params-symfony-validator-sdk)
 [![Code size](https://img.shields.io/github/languages/code-size/yoanm/php-jsonrpc-params-symfony-validator-sdk.svg)](https://github.com/yoanm/php-jsonrpc-params-symfony-validator-sdk)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github\&repo=yoanm/php-jsonrpc-params-symfony-validator-sdk)](https://dependabot.com)
+![Dependabot Status](https://flat.badgen.net/github/dependabot/yoanm/php-jsonrpc-params-symfony-validator-sdk)
+![Last commit](https://badgen.net/github/last-commit/yoanm/php-jsonrpc-params-symfony-validator-sdk)
 
 [![Scrutinizer Build Status](https://img.shields.io/scrutinizer/build/g/yoanm/php-jsonrpc-params-symfony-validator-sdk.svg?label=Scrutinizer\&logo=scrutinizer)](https://scrutinizer-ci.com/g/yoanm/php-jsonrpc-params-symfony-validator-sdk/build-status/master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/yoanm/php-jsonrpc-params-symfony-validator-sdk/master.svg?logo=scrutinizer)](https://scrutinizer-ci.com/g/yoanm/php-jsonrpc-params-symfony-validator-sdk/?branch=master)
@@ -14,7 +16,6 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/yoanm/jsonrpc-params-symfony-validator-sdk.svg)](https://packagist.org/packages/yoanm/jsonrpc-params-symfony-validator-sdk)
 [![Packagist PHP version](https://img.shields.io/packagist/php-v/yoanm/jsonrpc-params-symfony-validator-sdk.svg)](https://packagist.org/packages/yoanm/jsonrpc-params-symfony-validator-sdk)
 
-
 Simple JSON-RPC params validator that use Symfony validator component
 
 See [yoanm/symfony-jsonrpc-params-validator](https://github.com/yoanm/symfony-jsonrpc-params-validator) for automatic dependency injection.
@@ -23,23 +24,27 @@ See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/p
 
 ## Versions
 
-*   Symfony v3/4 - PHP >=7.1 : `^v1.0` 
-*   Symfony v4/5 - PHP >=7.2 : `^v2.0`
+* Symfony v3/4 - PHP >=7.1 : `^v1.0`
 
-    ⚠️⚠️ `v0.2.0` is replaced by `v1.0.0` ! ⚠️⚠️
+* Symfony v4/5 - PHP >=7.2 : `^v2.0`
 
-    ⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
+  ⚠️⚠️ `v0.2.0` is replaced by `v1.0.0` ! ⚠️⚠️
 
-*   Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v2.1`
+  ⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
+
+* Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v2.1`
 
 ## How to use
 
-In order to be validated, a JSON-RPC method must : 
-*   Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
-*   Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
+In order to be validated, a JSON-RPC method must :
+
+* Implements `JsonRpcMethodInterface` from [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
+* Implements [`MethodWithValidatedParamsInterface`](./src/Infra/JsonRpcParamsValidator.php)
 
 ### With [`yoanm/jsonrpc-server-sdk`](https://github.com/yoanm/php-jsonrpc-server-sdk)
-Create the validator and inject it into request handler : 
+
+Create the validator and inject it into request handler :
+
 ```php
 $requestHandler->setMethodParamsValidator(
   new JsonRpcParamsValidator(
@@ -50,7 +55,8 @@ $requestHandler->setMethodParamsValidator(
 
 Then you can send JSON-RPC request string to the server and any method wich implements `MethodWithValidatedParamsInterface` will be validated.
 
-### Standalone 
+### Standalone
+
 ```php
 use Symfony\Component\Validator\ValidatorBuilder;
 use Yoanm\JsonRpcParamsSymfonyValidator\Infra\JsonRpcParamsValidator;
@@ -65,6 +71,7 @@ $violationList = $paramsValidator->validate($jsonRpcRequest, $jsonRpcMethod);
 ```
 
 ### Params validation example
+
 ```php
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -98,7 +105,9 @@ class MethodExample implements JsonRpcMethodInterface, MethodWithValidatedParams
 ```
 
 ### Violations format
+
 Each violations will have the following format :
+
 ```php
 [
   'path' => 'property_path',
@@ -108,4 +117,5 @@ Each violations will have the following format :
 ```
 
 ## Contributing
+
 See [contributing note](./CONTRIBUTING.md)
