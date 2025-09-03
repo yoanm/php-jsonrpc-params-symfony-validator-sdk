@@ -209,7 +209,7 @@ jobs:
           # ("composer require" would override those constraints, which may not produce something actually installable by end-user)
           SF_CONSTRAINT="~${{ env.SYMFONY_VERSION }}.0"
           composer update --no-install --with-all-dependencies --minimal-changes \
-              --with "symfony/validator:${SF_CONSTRAINT}" \
+            --with "symfony/validator:${SF_CONSTRAINT}" \
           && make build
 
       - name: ComposerRequireChecker
