@@ -7,11 +7,12 @@ permissions:
 
 jobs:
   dependabot:
+    name: Auto-merge & Labels
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'yoanm/php-jsonrpc-params-symfony-validator-sdk'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'yoanm/php-jsonrpc-params-symfony-validator-sdk'
     steps:
       - name: Dependabot metadata
         id: metadata
