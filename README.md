@@ -11,7 +11,7 @@
 
 [![CI](https://github.com/yoanm/php-jsonrpc-params-symfony-validator-sdk/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/yoanm/php-jsonrpc-params-symfony-validator-sdk/actions/workflows/CI.yml)
 [![codecov](https://codecov.io/gh/yoanm/php-jsonrpc-params-symfony-validator-sdk/branch/master/graph/badge.svg?token=NHdwEBUFK5)](https://codecov.io/gh/yoanm/php-jsonrpc-params-symfony-validator-sdk)
-[![Symfony Versions](https://img.shields.io/badge/Symfony-v4.4%20%2F%20v5.4%2F%20v6.x-8892BF.svg?logo=github)](https://symfony.com/)
+[![Symfony Versions](https://img.shields.io/badge/Symfony-v5.4%20%2F%20v6.4%20%2F%20v7.x-8892BF.svg?logo=github)](https://symfony.com/)
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/yoanm/jsonrpc-params-symfony-validator-sdk.svg)](https://packagist.org/packages/yoanm/jsonrpc-params-symfony-validator-sdk)
 [![Packagist PHP version](https://img.shields.io/packagist/php-v/yoanm/jsonrpc-params-symfony-validator-sdk.svg)](https://packagist.org/packages/yoanm/jsonrpc-params-symfony-validator-sdk)
@@ -33,6 +33,7 @@ See [yoanm/jsonrpc-params-symfony-constraint-doc-sdk](https://github.com/yoanm/p
   ⚠️⚠️ `v0.3.0` was badly taggued, used `v2.0.0` instead ! ⚠️⚠️
 
 * Symfony v4.4/5.4/6.0 - PHP ^8.0 : `^v2.1`
+* Symfony v5.4/6.4/7.0 - PHP ^8.0 : `^v3.0`
 
 ## How to use
 
