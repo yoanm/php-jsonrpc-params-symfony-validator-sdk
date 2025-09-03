@@ -61,12 +61,12 @@ jobs:
             php-version: '${{ needs.fetch-supported-versions.outputs.php-max }}'
             symfony-version: '${{ needs.fetch-supported-versions.outputs.symfony-max }}'
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: Up to date versions - Sf 6.4 case
             php-version: '${{ needs.fetch-supported-versions.outputs.php-max }}'
             symfony-version: '6.4'
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: Bare minimum # => Lowest versions allowed by composer config
             php-version: '${{ needs.fetch-supported-versions.outputs.php-min }}'
             symfony-version: '${{ needs.fetch-supported-versions.outputs.symfony-min }}'
@@ -82,7 +82,7 @@ jobs:
             php-version: '${{ needs.fetch-supported-versions.outputs.php-max }}'
             symfony-version: '${{ needs.fetch-supported-versions.outputs.symfony-min }}'
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
     steps:
       - name: Check out code
         uses: actions/checkout@v5
@@ -120,8 +120,8 @@ jobs:
       - name: Build with PHP ${{ steps.setup-php.outputs.php-version }} & Symfony ${{ matrix.symfony-version }}
         run: |
           SF_CONSTRAINT="~${{ matrix.symfony-version }}.0"
-          composer require -W \
-            symfony/validator:${SF_CONSTRAINT} \
+          composer update --no-install --with-all-dependencies --minimal-changes \
+            --with "symfony/validator:${SF_CONSTRAINT}" \
             ${{ matrix.pkg-extra-constraints }} \
           && make build
 
@@ -202,8 +202,8 @@ jobs:
       - name: Build with PHP ${{ steps.setup-php.outputs.php-version }} & Symfony ${{ env.SYMFONY_VERSION }}
         run: |
           SF_CONSTRAINT="~${{ env.SYMFONY_VERSION }}.0"
-          composer require -W \
-            symfony/validator:${SF_CONSTRAINT} \
+          composer update --no-install --with-all-dependencies --minimal-changes \
+              --with "symfony/validator:${SF_CONSTRAINT}" \
           && make build
 
       - name: ComposerRequireChecker
@@ -231,25 +231,25 @@ jobs:
             php-version: ${{ needs.fetch-supported-versions.outputs.php-next }}
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-max }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: PHP with lowest supported Symfony versions
             php-version: ${{ needs.fetch-supported-versions.outputs.php-next }}
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-min }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: Symfony with highest supported PHP version
             php-version: ${{ needs.fetch-supported-versions.outputs.php-max }}
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-next }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
             # Fix - symfony/framework-bundle - Framework bundle <7.0 require php 8.1 minimum !
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: Symfony with lowest supported PHP version
             # Fix - symfony/validator  7.1 require php 8.2 minimum !
             php-version: ${{ ( needs.fetch-supported-versions.outputs.symfony-next == '7.1' && needs.fetch-supported-versions.outputs.php-min == '8.0' ) && '8.2' || needs.fetch-supported-versions.outputs.php-min }}
             symfony-version: ${{ needs.fetch-supported-versions.outputs.symfony-next }}
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
             # Fix - symfony/framework-bundle - Framework bundle <7.0 require php 8.1 minimum !
-            pkg-extra-constraints: behat/gherkin:~4.12.0
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
 
     steps:
       - name: Check out code
@@ -282,8 +282,8 @@ jobs:
         run: |
           SF_CONSTRAINT="~${{ matrix.symfony-version }}.0@dev"
           composer config minimum-stability dev \
-          && composer require -W \
-            symfony/validator:${SF_CONSTRAINT} \
+          && composer update --no-install --with-all-dependencies --minimal-changes \
+              --with "symfony/validator:${SF_CONSTRAINT}" \
             ${{ matrix.pkg-extra-constraints }} \
           && make build
 
