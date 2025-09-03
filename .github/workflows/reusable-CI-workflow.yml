@@ -120,7 +120,7 @@ jobs:
       - name: Build with PHP ${{ steps.setup-php.outputs.php-version }} & Symfony ${{ matrix.symfony-version }}
         run: |
           # Rely on "composer update --with" rather than "composer require" !
-          # => it ensures the tested version is actually allowed by constraints 
+          # => it ensures the tested version is actually allowed by constraints
           # ("composer require" would override those constraints, which may not produce something actually installable by end-user)
           SF_CONSTRAINT="~${{ matrix.symfony-version }}.0"
           composer update --no-install --with-all-dependencies --minimal-changes \
@@ -205,7 +205,7 @@ jobs:
       - name: Build with PHP ${{ steps.setup-php.outputs.php-version }} & Symfony ${{ env.SYMFONY_VERSION }}
         run: |
           # Rely on "composer update --with" rather than "composer require" !
-          # => it ensures the tested version is actually allowed by constraints 
+          # => it ensures the tested version is actually allowed by constraints
           # ("composer require" would override those constraints, which may not produce something actually installable by end-user)
           SF_CONSTRAINT="~${{ env.SYMFONY_VERSION }}.0"
           composer update --no-install --with-all-dependencies --minimal-changes \
