@@ -67,7 +67,7 @@ jobs:
             php-version: '${{ needs.fetch-supported-versions.outputs.php-max }}'
             symfony-version: '6.4'
             # Fix - behat/gherkin => Avoid issue with behat <-> gherkin packages (See https://github.com/Behat/Gherkin/issues/317)
-            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0' ${{ ( needs.fetch-supported-versions.outputs.symfony-max == '6.4' ) && '--with "symfony/yaml:~6.4.0"' || '' }}
+            pkg-extra-constraints: --with 'behat/gherkin:~4.12.0'
           - job-name: Bare minimum # => Lowest versions allowed by composer config
             php-version: '${{ needs.fetch-supported-versions.outputs.php-min }}'
             symfony-version: '${{ needs.fetch-supported-versions.outputs.symfony-min }}'
