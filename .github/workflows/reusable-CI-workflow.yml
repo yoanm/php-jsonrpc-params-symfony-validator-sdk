@@ -291,7 +291,7 @@ jobs:
           SF_CONSTRAINT="~${{ matrix.symfony-version }}.0@dev"
           composer config minimum-stability dev \
           && composer require --no-install --with-all-dependencies --minimal-changes \
-            --with "symfony/validator:${SF_CONSTRAINT}" \
+            symfony/validator:${SF_CONSTRAINT} \
             ${{ matrix.pkg-extra-constraints }} \
           && make build
 
